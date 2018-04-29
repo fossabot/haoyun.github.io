@@ -1,0 +1,257 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-61795702-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-61795702-1');
+</script>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Learning Haskell via Using Hakyll --- Some Notes - Natural Stupidity</title>
+        <link rel="stylesheet" href="../../../../../../css/blog_main.css" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css">
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
+            <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
+            <div class="title-bar-title">Menu</div>
+        </div>
+
+	    <!-- nav section -->
+        <div class="top-bar" id="responsive-menu">
+		    <div class="grid-container" style="flex-grow:1;">
+		        <div class="grid-x">
+		            <div class="top-bar-left">
+						    <!--<div class="menu-text">Natural Stupidity</div>
+							<li class="menu-text" style="padding-top:0px;padding-bottom:0px;">
+                                <a href="/" style="padding:0;"><img alt="facepalm" width="36" height="36" src="/images/facepalm.png"/></a></li>
+                                -->
+                                <ul class="menu">
+                            <li class>
+                                <a href="../../../../../../">Natural Stupidity</a>
+                            </li></ul>
+		            </div>
+		            <div class="top-bar-right">
+                        <ul class="menu" data-dropdown-menu>
+                            <li><a href="../../../../../../n/">Home</a></li>
+                            <li><a href="../../../../../../n/about/">About</a></li>
+                            <li><a href="../../../../../../n/contact/">Contact</a></li>
+                            <li><a href="../../../../../../n/archive/">Archive</a></li>
+                        </ul>
+		            </div>
+	            </div>
+		    </div>
+        </div>
+
+		<!-- main section -->
+
+
+        <article>
+    <div class="grid-container" style="min-height:100vh" id="main">
+        <div class="grid-y posts">
+            <section class="cell">
+    <div class="header">
+        <h1>Learning Haskell via Using Hakyll --- Some Notes</h1>
+        <p>
+            <i class="far fa-calendar"></i>&nbsp;August 28, 2017&nbsp;
+            
+            <i class="far fa-user"></i>&nbsp;Yun Hao&nbsp;
+            
+            
+            <i class="fas fa-history"></i>&nbsp;<a href="https://github.com/haoyun/haoyun.github.io/commits/source/src_site/n/posts/2017-08-28-Learning-Haskell-via-Using-Hakyll.markdown">History</a>&nbsp;
+            
+            
+            <i class="fas fa-code"></i>&nbsp;<a href="https://raw.githubusercontent.com/haoyun/haoyun.github.io/8aa7c23/src_site/n/posts/2017-08-28-Learning-Haskell-via-Using-Hakyll.markdown">8aa7c23</a>
+            
+        </p>
+    </div>
+    <div>
+        <p>It’s nice to understand how the original template works. With no preknowledge of Haskell, I learn it in the hard way.</p>
+<!--more-->
+<hr />
+<p>The <code>site.hs</code> contains the <code>main</code> function, this is the place where an <em>I/O action</em> is executed. This is explained in</p>
+<ul>
+<li><a href="http://learnyouahaskell.com/input-and-output#hello-world" class="uri">http://learnyouahaskell.com/input-and-output#hello-world</a></li>
+</ul>
+<blockquote>
+<p>So, when will an I/O action be performed? Well, this is where main comes in. An I/O action will be performed when we give it a name of main and then run our program.</p>
+</blockquote>
+<hr />
+<p>The main function is defined as</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1">main <span class="fu">=</span> hakyll <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">   <span class="dt">SOMETHING</span></a></code></pre></div>
+<p><code>hakyll</code> is a <em>function</em> and it has type</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ot">hakyll ::</span> <span class="dt">Rules</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</a></code></pre></div>
+<p>meaning that it takes something of type <code>Rules a</code>, and result in something of type <code>IO ()</code>.</p>
+<p>The type <code>IO ()</code> is explained in the previous link. Basically, it means <em>an I/O action that results in the empty tupe <code>()</code></em>.</p>
+<p>Now what is <code>Rules a</code>? <code>Rules</code> is something called a <em>type constructor</em>, it is explained in</p>
+<ul>
+<li><a href="http://learnyouahaskell.com/making-our-own-types-and-typeclasses#type-parameters" class="uri">http://learnyouahaskell.com/making-our-own-types-and-typeclasses#type-parameters</a></li>
+</ul>
+<p><code>Rules a</code> is defined in <code>Hakyll.Core.Rules.Internal</code>. It’s hard for me to understand it for now, so let us put it aside. But it is important to understand that if the <em>type variable</em> <code>a</code> is <code>SOMETYPE</code>, then we will get a type <code>Rules SOMETYPE</code>.</p>
+<p><code>do</code> is explained also in the fisrt link. It is a syntax to put some I/O actions together into one. So the whole indented block is something of type <code>IO ?</code>. Now I am not sure what is the type of the result of all these I/O actions. It should be the empty tupe <code>()</code>, but that is not important for now. It’s only important to know the whole stuff is an I/O action that will give some result ?.</p>
+<p>Now the dolar sign, it is explained in</p>
+<ul>
+<li><a href="http://learnyouahaskell.com/higher-order-functions#function-application" class="uri">http://learnyouahaskell.com/higher-order-functions#function-application</a></li>
+</ul>
+<p>But a little bit confusing in the begining. A better reference is</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/940382/haskell-difference-between-dot-and-dollar-sign" class="uri">https://stackoverflow.com/questions/940382/haskell-difference-between-dot-and-dollar-sign</a></li>
+</ul>
+<p>Basically, we can treat it a separator for now. Everything after the dollar sign will be treat as one thing. The it is easy to understand: codes after <code>$</code> are <code>do SOMETHING</code>, hence of type <code>IO ?</code> as explained above. So the action, after execution, give <code>?</code>. So ‘?’ becomes the value of the type variable <code>a</code> in <code>Rules a</code>, i.e., we are feeding the function <code>hakyll</code> with variable of type <code>Rules ?</code>. (As I guess <code>?</code> should be <code>()</code>, it should be `Rules ()’. Anyway, it’s enough to understand it to this extent for now.)</p>
+<hr />
+<p>In the <code>do</code> block. We have <code>match</code> function. It has type</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="ot">match ::</span> <span class="dt">Pattern</span> <span class="ot">-&gt;</span> <span class="dt">Rules</span> () <span class="ot">-&gt;</span> <span class="dt">Rules</span> ()</a></code></pre></div>
+<p>So it has two variables, the first one is of type <code>Pattern</code>, and the second one is of type <code>Rules ()</code>. The value of match function is of type <code>Rules ()</code>.</p>
+<p>So the codes</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1">match <span class="st">&quot;images/*&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    route   idRoute</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    compile copyFileCompile</a></code></pre></div>
+<p>means that we give the <code>&quot;images/*&quot;</code> as the first varible with type <code>Patter</code>, and <code>do SOMETHING</code> as the second variable with type <code>Rules ()</code>.</p>
+<p>Now what will <code>do</code>? The first thing is <code>route idRoute</code>. The function <code>route</code> is defined in <code>Hakyll.Core.Routes</code>. It has type</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ot">route ::</span> <span class="dt">Routes</span> <span class="ot">-&gt;</span> <span class="dt">Rules</span> ()</a></code></pre></div>
+<p>So it takes something of type <code>Routes</code> and gives a value of type <code>Rules ()</code>. Of course <code>idRoute</code> is of type <code>Routes</code>.</p>
+<p>The next function <code>compile</code> is of type</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" data-line-number="1">compile</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="ot">  ::</span> (<span class="dt">Writable</span> a, <span class="dt">Data.Typeable.Internal.Typeable</span> a,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">      binary<span class="fu">-</span><span class="fl">0.8</span><span class="fu">.</span><span class="fl">3.0</span><span class="fu">:</span><span class="dt">Data.Binary.Class.Binary</span> a) <span class="ot">=&gt;</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">     <span class="dt">Compiler</span> (<span class="dt">Item</span> a) <span class="ot">-&gt;</span> <span class="dt">Rules</span> ()</a></code></pre></div>
+<p>This is a little bit complicated, but not that much.</p>
+<blockquote>
+<p>Everything before the =&gt; symbol is called a <em>class constraint</em> (seems also called a <em>type constriant</em>)</p>
+</blockquote>
+<p>as explained in</p>
+<ul>
+<li><a href="http://learnyouahaskell.com/types-and-typeclasses#typeclasses-101" class="uri">http://learnyouahaskell.com/types-and-typeclasses#typeclasses-101</a></li>
+</ul>
+<p>So the <code>compile</code> function has one variable of type <code>Compiler (Item a)</code>, and one value of type <code>Rules ()</code>. What is more, the type variable <code>a</code> has to have type belongs to <em>typeclassess</em> <code>Writable</code>, and <code>Data.Typeable.Internal.Typeable</code>, <code>binary-0.8.3.0:Data.Binary.Class.Binary</code> — what are these are not that important. Of course, <code>copyFileCompiler</code> is the varialbe that has type <code>Compiler (Item a)</code>. Acutually, we have</p>
+<p>```haskell copyFileCompiler :: Compiler (Item CopyFile) ’’’</p>
+<p>Now we know the <code>do SOMTHING</code> in this first small block returns something of type <code>Rules ()</code>, which is the result of the <em>last</em> I/O action in the <code>do</code> list. This <code>do SOMETHING</code> as a whole, serves as the second variable of the function <code>match</code>.</p>
+<p>Finally the function <code>match</code> returns its value of tpye <code>Rules ()</code>.</p>
+<p>The next small block</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" data-line-number="1">match <span class="st">&quot;css/*&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">    route   idRoute</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">    compile compressCssCompiler</a></code></pre></div>
+<p>is similar.</p>
+<hr />
+<p>Continue.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb8-1" data-line-number="1">match (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>]) <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">    route   <span class="fu">$</span> setExtension <span class="st">&quot;html&quot;</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">    compile <span class="fu">$</span> pandocCompiler</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">        <span class="fu">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> defaultContext</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">        <span class="fu">&gt;&gt;=</span> relativizeUrls</a></code></pre></div>
+<p>Only need to understand what will <code>do</code>.</p>
+<p>The variable of the route is the value of <code>setExtension &quot;html&quot;</code>. The function <code>setExtension</code> has type:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ot">setExtension ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Routes</span></a></code></pre></div>
+<p>The line</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb10-1" data-line-number="1">route   <span class="fu">$</span> setExtension <span class="st">&quot;html&quot;</span></a></code></pre></div>
+<p>can be replaced by</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb11-1" data-line-number="1">route <span class="fu">.</span> setExtension <span class="st">&quot;html&quot;</span></a></code></pre></div>
+<p>where <code>.</code> is the composition of fuctions. It is explained in</p>
+<ul>
+<li><a href="http://learnyouahaskell.com/higher-order-functions#composition" class="uri">http://learnyouahaskell.com/higher-order-functions#composition</a></li>
+</ul>
+<p>as well as a link given above.</p>
+<p>The variable of <code>compile</code> is</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb12-1" data-line-number="1">pandocCompiler</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">    <span class="fu">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> defaultContext</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">    <span class="fu">&gt;&gt;=</span> relativizeUrls</a></code></pre></div>
+<p><code>pandocCompiler</code> has type</p>
+<pre class="hasekll"><code>pandocCompiler :: Compiler (Item String)</code></pre>
+    </div>
+</section>
+
+<section>
+    <script>
+var idcomments_acct = '3eb5e7864d2f0dc9d1586c6209453d5d';
+var idcomments_post_id;
+var idcomments_post_url = '/n/posts/2017/08/28/Learning-Haskell-via-Using-Hakyll';
+</script>
+<span id="IDCommentsPostTitle" style="display:none"></span>
+<script type="text/javascript" src="https://www.intensedebate.com/js/genericCommentWrapperV2.js"></script>
+
+</section>
+        </div>
+    </div>
+</article>
+
+
+
+		<!-- Footer -->
+<a href="javascript:void(0);" id="rocketmeluncur" class="showrocket"><i></i></a>
+
+<footer>
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x grid-padding-y">
+            <!--<div class="cell medium-4">
+                <h6>About Yun Hao</h6>
+            </div>-->
+            <div class="cell medium-8">
+                <h5>About the site</h5>
+                <p>This static site is generated by
+                <a href="//jaspervdj.be/hakyll/">Hakyll</a> from
+                <a href="//pandoc.org/">Pandoc</a>'s extended
+                <a href="//daringfireball.net/projects/markdown/">Markdown</a>.
+                Stylesheets are built with
+                <a href="//foundation.zurb.com/">Zurb Foundation</a><!--
+                with <a href="http://ethanschoonover.com/solarized">Solarized</a>
+                color-scheme-->. The site, including source codes, is hosted on
+                <a href="//pages.github.com">Github Pages</a>.</p>
+                
+                <p>
+                    Compiled from commit <a href="https://raw.githubusercontent.com/haoyun/haoyun.github.io/8aa7c23/src_site/n/posts/2017-08-28-Learning-Haskell-via-Using-Hakyll.markdown">8aa7c23</a>.
+                </p>
+            </div>
+            <div class="cell medium-4">
+                <h5>Links</h5>
+                <ul>
+                    <li><a href="//push2kindle-154021.appspot.com/">KindleEar</a></li>
+                    <!--<li><a href="//haoyun.000webhostapp.com/piwik/index.php">Piwik</a></li>-->
+                    <!--<li><a href="/s/notes/">Notes</a></li>-->
+                    <li><a href="../../../../../../s/links/">Links</a></li>
+                    <li><a href="../../../../../../s/tools/">Tools</a></li>
+                    <li><a href="../../../../../../comment/">Leave a Comment</a>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    <div class="footer-copyright">
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x grid-margin-y">
+                <div class="cell">
+                    © 2017 Yun Hao &lt;<a href="mailto:haoyun_public@163.com">haoyun_public@163.com</a>&gt;
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- fork on github
+<div class="show-for-medium">
+<a href="https://github.com/haoyun/haoyun.github.io/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+</div>
+-->
+<script src="//static.getclicky.com/js" type="text/javascript"></script>
+<script type="text/javascript">try{ clicky.init(101019144); }catch(e){}</script>
+<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/101019144ns.gif" /></p></noscript>
+
+<!-- JavaScript -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.js"></script>
+<script src="../../../../../../js/app.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    $(document).foundation();
+</script>
+
+
+    </body>
+</html>
